@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+tmp/
+output/
+*.log
+
+# Internal planning files
+AUDIT.md
+MVP.md
+REPORT_DESIGN.md
+SPECIFICATION.md

@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reportflow-demo"
+version = "0.1.0"
+description = "Generate weekly PDF and Excel reports from API and SQLite data"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "reportlab>=4.0,<5",
+    "requests>=2.31,<3",
+    "XlsxWriter>=3.2,<4",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9"]
+
+[project.scripts]
+reportflow = "reportflow.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
