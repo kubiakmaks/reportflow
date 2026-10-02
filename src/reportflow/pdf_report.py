@@ -20,7 +20,14 @@ def _money(value: float) -> str:
     return f"{value:,.2f} PLN"
 
 
-def _bar_list(pdf: canvas.Canvas, title: str, values: dict[str, float], x: float, y: float, width: float) -> None:
+def _bar_list(
+    pdf: canvas.Canvas,
+    title: str,
+    values: dict[str, float],
+    x: float,
+    y: float,
+    width: float,
+) -> None:
     pdf.setFillColor(TEXT)
     pdf.setFont("Helvetica-Bold", 10)
     pdf.drawString(x, y, title)
@@ -33,7 +40,15 @@ def _bar_list(pdf: canvas.Canvas, title: str, values: dict[str, float], x: float
         pdf.setFillColor(LIGHT)
         pdf.roundRect(x + 28 * mm, row_y, width - 53 * mm, 4 * mm, 2 * mm, stroke=0, fill=1)
         pdf.setFillColor(BLUE)
-        pdf.roundRect(x + 28 * mm, row_y, (width - 53 * mm) * (value / maximum), 4 * mm, 2 * mm, stroke=0, fill=1)
+        pdf.roundRect(
+            x + 28 * mm,
+            row_y,
+            (width - 53 * mm) * (value / maximum),
+            4 * mm,
+            2 * mm,
+            stroke=0,
+            fill=1,
+        )
         pdf.setFillColor(MUTED)
         pdf.drawRightString(x + width, row_y + 2, f"{value:,.0f}")
         row_y -= 8 * mm
@@ -68,7 +83,12 @@ def build_pdf(path: Path, summary: dict, generated_at: str) -> None:
     cards = [
         ("Valid orders", f"{kpis['valid_orders']:,}"),
         ("Non-cancelled value", _money(kpis["non_cancelled_value"])),
-        ("On-time shipped", f"{kpis['on_time_shipped_rate']:.1%}" if kpis["on_time_shipped_rate"] is not None else "n/a"),
+        (
+            "On-time shipped",
+            f"{kpis['on_time_shipped_rate']:.1%}"
+            if kpis["on_time_shipped_rate"] is not None
+            else "n/a",
+        ),
         ("Rejected records", f"{kpis['rejected_records']:,}"),
     ]
     card_y = page_height - 75 * mm
@@ -88,7 +108,17 @@ def build_pdf(path: Path, summary: dict, generated_at: str) -> None:
     panel_y = page_height - 100 * mm
     panel_width = (page_width - 36 * mm) / 2
     _bar_list(pdf, "Order value by region (PLN)", summary["value_by_region"], 16 * mm, panel_y, panel_width)
-    _bar_list(pdf, "Orders by status", {key.title(): float(value) for key, value in summary["orders_by_status"].items()}, 20 * mm + panel_width, panel_y, panel_width)
+    status_counts = {
+        key.title(): float(value) for key, value in summary["orders_by_status"].items()
+    }
+    _bar_list(
+        pdf,
+        "Orders by status",
+        status_counts,
+        20 * mm + panel_width,
+        panel_y,
+        panel_width,
+    )
 
     quality_y = 120 * mm
     pdf.setFillColor(NAVY)
@@ -98,7 +128,12 @@ def build_pdf(path: Path, summary: dict, generated_at: str) -> None:
     pdf.roundRect(16 * mm, quality_y - 2 * mm, page_width - 32 * mm, 10 * mm, 2 * mm, stroke=0, fill=1)
     pdf.setFillColor(TEXT)
     pdf.setFont("Helvetica", 8.5)
-    pdf.drawString(20 * mm, quality_y + 2 * mm, f"{kpis['rejected_records']} rejected API records. {summary['quality']['missing_customer_ids']} order has no matching SQL customer and remains in totals.")
+    quality_note = (
+        f"{kpis['rejected_records']} rejected API records. "
+        f"{summary['quality']['missing_customer_ids']} order has no matching SQL customer "
+        "and remains in totals."
+    )
+    pdf.drawString(20 * mm, quality_y + 2 * mm, quality_note)
 
     pdf.setStrokeColor(colors.HexColor("#D9E1E8"))
     pdf.line(16 * mm, 17 * mm, page_width - 16 * mm, 17 * mm)

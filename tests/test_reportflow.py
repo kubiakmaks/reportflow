@@ -58,8 +58,20 @@ def test_api_uses_two_pages_and_retries_503() -> None:
 
 def test_kpis_keep_order_without_sql_customer(tmp_path: Path) -> None:
     known = Order.from_api(raw_order(order_id="ORD-1", amount=100))
-    unknown = Order.from_api(raw_order(order_id="ORD-2", customer_id="C999", status="shipped", amount=250, shipped_at="2026-09-17"))
-    late = Order.from_api(raw_order(order_id="ORD-3", status="shipped", amount=50, shipped_at="2026-09-18"))
+    unknown = Order.from_api(
+        raw_order(
+            order_id="ORD-2",
+            customer_id="C999",
+            status="shipped",
+            amount=250,
+            shipped_at="2026-09-17",
+        )
+    )
+    late = Order.from_api(
+        raw_order(
+            order_id="ORD-3", status="shipped", amount=50, shipped_at="2026-09-18"
+        )
+    )
     cancelled = Order.from_api(raw_order(order_id="ORD-4", status="cancelled", amount=999))
     database = tmp_path / "reference.db"
     prepare_demo_database(database)

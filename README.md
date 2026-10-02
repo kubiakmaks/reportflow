@@ -27,6 +27,8 @@ The demo produces 46 valid orders, 4 rejected records and 1 warning for an order
 
 <img src="assets/pdf-report.png" alt="PDF report" width="520">
 
+The PDF is the management view. The workbook keeps the same summary alongside accepted orders and the rejected-record trail.
+
 The workbook contains:
 
 - `Summary` - four KPIs and two breakdowns.
@@ -66,5 +68,3 @@ The tests cover record validation, API pagination and retry, KPI calculations an
 - Synthetic data stays deterministic, so results remain reproducible.
 
 All names and records are synthetic. The repository contains no client data or production credentials.
-
-For the business-focused overview, see [CASE_STUDY.md](CASE_STUDY.md).

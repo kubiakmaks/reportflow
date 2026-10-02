@@ -31,10 +31,37 @@ def _records() -> list[dict]:
         )
     records.extend(
         [
-            {"order_id": "ORD-BAD-1", "customer_id": "C001", "promised_at": "2026-09-20", "status": "paid", "amount": 120},
-            {"order_id": "ORD-BAD-2", "customer_id": "C002", "ordered_at": "2026-09-18", "promised_at": "2026-09-21", "status": "unknown", "amount": 200},
-            {"order_id": "ORD-BAD-3", "customer_id": "C003", "ordered_at": "2026-09-19", "promised_at": "2026-09-22", "status": "processing", "amount": 0},
-            {"order_id": "ORD-0001", "customer_id": "C004", "ordered_at": "2026-09-20", "promised_at": "2026-09-23", "status": "paid", "amount": 500},
+            {
+                "order_id": "ORD-BAD-1",
+                "customer_id": "C001",
+                "promised_at": "2026-09-20",
+                "status": "paid",
+                "amount": 120,
+            },
+            {
+                "order_id": "ORD-BAD-2",
+                "customer_id": "C002",
+                "ordered_at": "2026-09-18",
+                "promised_at": "2026-09-21",
+                "status": "unknown",
+                "amount": 200,
+            },
+            {
+                "order_id": "ORD-BAD-3",
+                "customer_id": "C003",
+                "ordered_at": "2026-09-19",
+                "promised_at": "2026-09-22",
+                "status": "processing",
+                "amount": 0,
+            },
+            {
+                "order_id": "ORD-0001",
+                "customer_id": "C004",
+                "ordered_at": "2026-09-20",
+                "promised_at": "2026-09-23",
+                "status": "paid",
+                "amount": 500,
+            },
         ]
     )
     return records

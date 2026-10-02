@@ -62,7 +62,12 @@ def run_pipeline(base_url: str, token: str, output_dir: Path) -> dict:
         generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
         build_pdf(output_dir / "reportflow_report.pdf", summary, generated_at)
         build_excel(output_dir / "reportflow_report.xlsx", summary, enriched, rejected, warnings, generated_at)
-        logger.info("Pipeline completed: %s valid, %s rejected, %s warnings", len(enriched), len(rejected), len(warnings))
+        logger.info(
+            "Pipeline completed: %s valid, %s rejected, %s warnings",
+            len(enriched),
+            len(rejected),
+            len(warnings),
+        )
         return {
             "generated_at": generated_at,
             "summary": summary,
